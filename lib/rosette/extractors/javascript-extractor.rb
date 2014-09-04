@@ -63,15 +63,15 @@ module Rosette
 
       def parse(javascript_code)
         reader = Java::JavaIo::StringReader.new(javascript_code)
-        parser.parse(reader, nil, 1)
+        create_parser.parse(reader, nil, 1)
+      rescue Java::OrgMozillaJavascript::EvaluatorException => e
+        raise Rosette::Core::SyntaxError.new('syntax error', e, :javascript)
       end
 
-      def parser
-        @parser ||= begin
-          compiler_env = CompilerEnvirons.new
-          error_reporter = compiler_env.getErrorReporter
-          Parser.new(compiler_env, error_reporter)
-        end
+      def create_parser
+        compiler_env = CompilerEnvirons.new
+        error_reporter = compiler_env.getErrorReporter
+        Parser.new(compiler_env, error_reporter)
       end
 
       class UnderscoreExtractor < JavascriptExtractor
