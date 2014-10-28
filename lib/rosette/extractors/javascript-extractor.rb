@@ -33,6 +33,10 @@ module Rosette
     end
 
     class JavascriptExtractor < Rosette::Core::Extractor
+      def supports_line_numbers?
+        true
+      end
+
       protected
 
       def each_function_call(javascript_code)
@@ -50,10 +54,6 @@ module Rosette
         else
           to_enum(__method__, javascript_code)
         end
-      end
-
-      def supports_line_numbers?
-        true
       end
 
       def valid_args?(node)
