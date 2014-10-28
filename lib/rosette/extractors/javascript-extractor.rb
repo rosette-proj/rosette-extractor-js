@@ -41,13 +41,19 @@ module Rosette
           visitor = RhinoVisitor.new
 
           visitor.on_node_found do |node|
-            yield node if node.is_a?(FunctionCall)
+            if node.is_a?(FunctionCall)
+              yield node, node.getLineno
+            end
           end
 
           root.visitAll(visitor)
         else
           to_enum(__method__, javascript_code)
         end
+      end
+
+      def supports_line_numbers?
+        true
       end
 
       def valid_args?(node)
