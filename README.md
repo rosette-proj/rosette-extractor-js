@@ -1,4 +1,4 @@
-rosette-extractor-rb
+rosette-extractor-js
 ====================
 
 Extracts translatable strings from Javascript source code for the Rosette internationalization platform.
